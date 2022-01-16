@@ -27,6 +27,8 @@ class ImportCategoryUseCase {
           categories.push({ name, description });
         })
         .on('end', () => {
+          // deleção do arquivo enviado após a varredura
+          // fs.promises.unlink(file.path);
           resolve(categories);
         })
         .on('error', err => {
