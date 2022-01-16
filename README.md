@@ -398,7 +398,9 @@ Para padronizar o tipo de quebra de linha usada pelo VS Code no Windows, iremos 
 Com o arquivo criado você já está pronto para continuar. Todas as quebras de linha estarão no formato esperado pelo ESLint.
 
 ---
-**Criar Manualmente o arquivo` prettier.config.js`**
+
+# Configurando Prettier
+## Criar Manualmente o arquivo` prettier.config.js`**
 
 ```js
 
@@ -479,7 +481,7 @@ E concluindo para que a conseguir se conectar com a aplicação e executar o deb
 
 ---
 
-## Diagrama da aplicação desse projeto de estudo:
+# Diagrama da aplicação desse projeto de estudo:
 
 ![Diagrama](./images/diagrama.png)
 
@@ -521,3 +523,139 @@ create({ description, name }: ICreateCategoryDTO): void {
 	}
 
 ```
+---
+# Recaptulando algo importante da orientação à objetos para o `Typescript:`
+
+##  A Diferença de **`classe`**, **`objeto`** e **`instância`** :
+##  instância é a "materialização" da classe, o que gera um objeto na memória!
+![Pizza Orientada a Objetos](./images/PizzaOO.png)
+
+---
+## Principios de S.O.L.I.D.
+
+>> Arquitetura, código Limpo => Informações claras e bem definidas, padrões de organização de projetos, bom para projetos escaláveis.
+
+[>>Sobre Uncle Bob<<](https://pt.wikipedia.org/wiki/Robert_Cecil_Martin)
+
+**`S`** => **SRP** - Single Responsability Principle (Princípio da Responsabilidade Única) 
+* Deixar nas rotas somente o que for responsabilidade atribuída à elas, sempre avaliando o contexto da necessidade do endpoint; Receber a requisição, processar e retornar resposta.
+
+**`O`** => **OCP** - Open-Closed Principle (Princípio aberto/fechado)
+
+**`L`** => **LSP** - Liskov Substituition Principle (Princípio de Substituição de Liskov)
+* Bárbara Liskov - Se você tem uma Classe S e essa Classe é um subtipo de T, então todos os objetos do tipo T dentro de um programa podem ser substituídos pelos objetos do tipo S sem que isso afete a execução correta do programa.
+  
+**`I`** => **ISP** - Interface Segregation Principle (Princípio da Segregação de Interface)
+
+**`D`** => **DIP** - Dependency Inversion Principle (Princípio da Inversão de Dependência)
+* O código que implementa uma política de alto nível(camada mais próxima ao domínio) não deve depender do código que implementa detalhes de baixo nível(rotas, mais perto do usuário)
+
+---
+
+### Singleton Pattern
+* Tem como definição criar apenas um instância de uma classe que será um instância global para a aplicação.
+* Toda vez que a gente chamar essa classe, ela ira utilizar a mesma instância da classe.
+* >> Verificar a necessidade de se ter somente uma instância!
+
+### Biblioteca Multer
+[Documentação](https://www.npmjs.com/package/multer)
+
+* Serve para fazer a leitura de arquivos dentro da aplicação, através do upload do arquivo.
+* Nessa aplicação vamos pegar o arquivo de categorias recebido por upload, armazenar em uma pasta temporária pra fazer a leitura dos dados do arquivo e depois faz a deleção.
+
+adicionar a dependência
+
+```properties bash
+
+yarn add multer
+
+```
+
+adicionar os tipos do multer ao express para o intelisense do VS Code fazer o autocomplete:
+
+```properties bash
+
+yarn add @types/multer -D
+
+```
+
+
+>>**No retorno do post de importação de arquivos é uma boa prática retornar a URL no corpo da requisição assim seu front não vai precisar fazer uma request numa api get pra pegar essa info!**
+
+### Biblioteca csv-parser
+[Documentação](https://www.npmjs.com/package/csv-parser)
+
+* Tem funcionalidades já implementadas que facilitam a leitura do arquivo no formato csv
+
+```properties bash
+
+yarn add csv-parse
+
+```
+
+---
+
+## Conceito de Stream no Node.JS
+* Permite que seja lido determinado arquivo `by chuncks`, "por partes".
+  
+* Chunk: um Buffer que representa os dados que estão chegando
+
+>> Pensar no Netflix, Youtube...O servidor envio o pedaço do nosso vídeo aos poucos para o player, isso faz com que o consumo de banda seja menor, o consumo de dados seja menor, melhora a performance no consumo de memória do servidor, isso com a leitura das informações por partes.
+
+Ver mais informações sobre Stream no Node.JS [>>aqui!](https://nodejs.reativa.dev/0052-nodejs-streams/index)
+
+# Swagger - auxilia na documentação da aplicação
+Utilizando a [biblioteca swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express):
+
+```properties bash
+
+yarn add swagger-ui-express
+
+yarn add @types/swagger-ui-express -D
+
+```
+ 
+## Para importar e subir um servidor do swagger : 
+
+* Importar o arquivo e subir o servidor na rota `"/api-docs"`
+
+```ts
+import swaggerFile from './swagger.json';
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+```
+
+![Swagger import](images/import-swagger.jpg)
+
+E para corrigir o erro da importação caso ele ocorra, descomentar a linha  no `tsconfig.json` 
+
+```json
+ 
+ "resolveJsonModule": true,                        /* Enable importing .json files */
+
+```
+![Correção](images/resolvejsonmodule.jpg)
+
+
+* criar um arquivo no diretório src : `swagger.json`
+  
+```json
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "RentaLX Documentation",
+    "description": "This is an API Rent",
+    "version": "1.0.0",
+    "contact": {
+      "email": "donatello@catiorro.com"
+    }
+  }
+}
+
+```
+Acessando no **http://localhost:3333/api-docs/**
+
+![swagger no browser](images/swaggerbrowser.jpg)
+
+
