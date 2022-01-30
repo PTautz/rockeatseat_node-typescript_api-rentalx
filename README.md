@@ -387,7 +387,7 @@ O arquivo final vai ficar assim:
 
 E a configuração está finalizada. Para garantir que o código seja formatado corretamente, você pode abrir os arquivos do projeto e salvar eles novamente.
 
-# Problemas no Windows
+# ⚠️ Problemas no Windows
 
 É provável que você enfrente alguns problemas de conflito entre o ESLint e o tipo de quebra de linha no Windows. Isso acontece porque quando usamos a quebra de linha no Windows, ela é interpretada como `\r\n` enquanto em sistemas Unix é `\n`. Como o ESLint tenta sempre corrigir para `\n`, esse conflito acaba acontecendo.
 
@@ -658,4 +658,109 @@ Acessando no **http://localhost:3333/api-docs/**
 
 ![swagger no browser](images/swaggerbrowser.jpg)
 
+---
+# Conhecendo TSyringe
+Auxilia na injeção de dependências na aplicação
+[Documentação TSyringe](https://github.com/microsoft/tsyringe)
 
+## Instalação:
+
+```properties bash
+
+npm install --save tsyringe / yarn add tsyringe
+
+```
+* Modificar o tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+
+```
+* Caso não tenha instalado o reflect-metadata:
+  
+```properties bash
+
+yarn add reflect-medatada
+
+```
+* Importação: 
+
+```ts
+// main.ts
+import "reflect-metadata";
+
+// Your code here...
+```
+
+# Utilizar BCryptjs para criptografia de senhas:
+
+>> ⚠️ PS : Bcrypt deu treta com o container no Docker
+
+```properties bash
+
+yarn add bcryptjs
+
+```
+* Adicionar tipagens
+```properties bash
+
+yarn add @types/bcryptjs -D
+
+```
+
+
+* import no usecase 
+```ts
+
+import { hash } from 'bcryptjs';
+
+```
+
+# JWT Json Web Token - Autenticação de usuários
+A aplicação vai ter uma rota de sessão onde o usuário vai passar as informações do email e da senha, a gente vai validar o cadastro e a senha se estão corretos e gera um token para o usuário.
+Em todas as sessões o usuário vai precisar passar esse token para validar se o usuário está qualificado para a operação que está sendo solicitada.
+Ex: Token que vai garantir que usuário que está cadastrando uma categoria está apto para isso, seja administrador.
+
+A estrutura do JWT é dividida em três partes : `Header`(Algoritmo e tipo de token), `Payload`(Data) e `Verify Signature`:
+
+* ⚠️ Importante não passar dados críticos no payload
+
+![JWT](images/jwt.png)
+
+
+[Documentação JWT](https://jwt.io/)
+
+* Adicinando JWS à aplicação: 
+
+```properties bash
+
+yarn add jsonwebtoken
+
+yarn add @types/jsonwebtoken -D
+
+```
+
+[Ver também MD5 hash generator](https://www.md5hashgenerator.com/) 
+
+## Lib Errors:
+
+```properties bash
+
+yarn add express-async-errors
+
+```
+* Importação após express no server.ts:
+
+```ts
+
+import 'express-async-errors';
+
+```
+
+
+ 
