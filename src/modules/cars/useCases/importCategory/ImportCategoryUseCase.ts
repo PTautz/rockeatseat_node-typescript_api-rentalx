@@ -1,7 +1,8 @@
-import { parse } from 'csv-parse';
-import fs from 'fs';
-import { inject, injectable } from 'tsyringe';
-import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
+import { parse } from "csv-parse";
+import fs from "fs";
+import { inject, injectable } from "tsyringe";
+
+import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 
 interface IImportCategory {
   name: string;
@@ -11,7 +12,7 @@ interface IImportCategory {
 @injectable()
 class ImportCategoryUseCase {
   constructor(
-    @inject('CategoriesRepository')
+    @inject("CategoriesRepository")
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
@@ -26,17 +27,17 @@ class ImportCategoryUseCase {
       stream.pipe(parseFile);
 
       parseFile
-        .on('data', async line => {
+        .on("data", async line => {
           // ["name", "description"]
           const [name, description] = line;
           categories.push({ name, description });
         })
-        .on('end', () => {
+        .on("end", () => {
           // deleção do arquivo enviado após a varredura
           // fs.promises.unlink(file.path);
           resolve(categories);
         })
-        .on('error', err => {
+        .on("error", err => {
           reject(err);
         });
     });

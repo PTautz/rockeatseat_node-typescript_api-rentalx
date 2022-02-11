@@ -1,10 +1,11 @@
-import { compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { inject, injectable } from 'tsyringe';
+import { compare } from "bcryptjs";
 
-import { CustomError } from '../../../../errors/CustomError';
+import { sign } from "jsonwebtoken";
 
-import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { inject, injectable } from "tsyringe";
+
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { CustomError } from "@shared/errors/CustomError";
 
 interface IRequest {
   email: string;
@@ -23,7 +24,7 @@ interface IResponse {
 @injectable()
 class AuthenticateUserUseCase {
   constructor(
-    @inject('UsersRepository')
+    @inject("UsersRepository")
     private usersRepository: IUsersRepository,
   ) {}
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -31,7 +32,7 @@ class AuthenticateUserUseCase {
     const userExists = await this.usersRepository.findByEmail(email);
 
     if (!userExists) {
-      throw new CustomError(401, 'Email or password incorrect!');
+      throw new CustomError(401, "Email or password incorrect!");
     }
 
     /*
@@ -39,16 +40,17 @@ class AuthenticateUserUseCase {
     comparação com a senha que esta passando no password 
     com a senha cadastrada no banco
     */
+    // console.log(new Date());
 
     const passwordMatch = await compare(password, userExists.password);
     if (!passwordMatch) {
-      throw new CustomError(401, 'Email or password incorrect!');
+      throw new CustomError(401, "Email or password incorrect!");
     }
 
     // Se usuário e senha corretos então gerar jsonwebtoken -
-    const token = sign({}, '57d5917f817ab6f6079c36b0d0339ca1', {
+    const token = sign({}, "57d5917f817ab6f6079c36b0d0339ca1", {
       subject: userExists.id,
-      expiresIn: '1d',
+      expiresIn: "1d",
     });
 
     const tokenReturn: IResponse = {

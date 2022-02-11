@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { container } from 'tsyringe';
+import { container } from "tsyringe";
 
-import { ListCategoriesUseCase } from './ListCategoriesUseCase';
+import { ListCategoriesUseCase } from "./ListCategoriesUseCase";
 
 class ListCategoriesController {
   // constructor(private ListCategoriesUseCase: ListCategoriesUseCase) {}

@@ -259,3 +259,6 @@ yarn typeorm migration:create -n AlterUserDeleteUsername
 ```
 
 
+>> Maravilhas de bancos relacionais :
+
+Se eu tiver chave estrangeira da tabela filha (carros) apontando pra tabela pai (categoria), primeiro precisa inserir categoria para depois inserir carros.

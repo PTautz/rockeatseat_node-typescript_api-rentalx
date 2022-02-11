@@ -1,16 +1,16 @@
-import crypto from 'crypto';
-import multer from 'multer';
+import crypto from "crypto";
+import multer from "multer";
 
-import { resolve } from 'path';
+import { resolve } from "path";
 
 export default {
   upload(folder: string) {
     return {
       storage: multer.diskStorage({
-        destination: resolve(__dirname, '..', '..', folder),
+        destination: resolve(__dirname, "..", "..", folder),
         filename: (request, file, callback) => {
           // evitar arquivo com nome duplicado
-          const fileHash = crypto.randomBytes(16).toString('hex');
+          const fileHash = crypto.randomBytes(16).toString("hex");
 
           const fileName = `${fileHash}-${file.originalname}`;
 

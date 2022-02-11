@@ -483,7 +483,7 @@ E concluindo para que a conseguir se conectar com a aplicação e executar o deb
 
 # Diagrama da aplicação desse projeto de estudo:
 
-![Diagrama](./images/diagrama.png)
+![Diagrama](./images/diagrama-da-aplicação-rentx.png)
 
 ---
 ## Utilizando UUID - Identificador Unico Universal
@@ -761,6 +761,122 @@ yarn add express-async-errors
 import 'express-async-errors';
 
 ```
+
+## mapeamento de importações automágicamente :
+* Dependência que 'traduz' nas importações para o ts-node-dev:
+
+```properties bash
+
+yarn add tsconfig-paths -D
+
+```
+
+* adicionar  `-r tsconfig-paths/register` no script do package.json :
+
+```json
+
+"scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "test": "jest"
+  },
+
+
+```
+
+
+
+* No `tsconfig.json` abaixo de `baseURL`:
+
+```json
+
+"baseUrl:": "./src"
+
+"paths": {
+  // procurar na pasta modules e busque todos os arquivos contidos nela (*)
+  "@modules/*": ["modules/*"],
+  "@config/*": ["config/*"],
+  "@shared/*": ["shared/*"],
+  "@erros/*": ["errors/*"],
+  "@utils/*": ["utils/*"],
+},
+
+```
+>>  Fazer Reload da aplicação:  `Ctrl + p  --> reload ` 
+
+* Modificar no eslintrc: 
+
+```json
+
+ "import-helpers/order-imports": [
+            "warn",
+            {
+                "newlinesBetween": "ignore",
+                "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
+                "alphabetize": { "order": "asc", "ignoreCase": true }
+            }
+        ],
+
+```
+* ⚠️ lembrar de corrigir os comentários no `tsconfig.json` ⚠️
+
+---
+# Criar seed para permissão de administrador:
+
+* Criação do `admin.ts`:
+![criação de admin.ts no diretório do typeorm](images/seed-admin.png)
+
+*Adicionando script no `package.json`:
+
+![Adição do script no package.json](images/package-json-seed-admin.png)
+
+---
+
+# Trabalhando com datas : DAY.JS
+* lib DAY.JS >> [Documentação](https://day.js.org/)
+
+* Instalando: 
+```properties bash
+
+yarn add dayjs
+
+```
+
+# Teste de integração 
+*SuperTest - [Documentação](https://www.npmjs.com/package/supertest)
+
+
+
+
+* Instalando: 
+```properties Bash
+
+yarn add supertest @types/supertest -D
+
+```
+
+* Criar base para testes(comando para subir container com imagem postgreSQL no Docker): 
+```properties bash
+
+docker run --name rentx_test -p 5432:5432 -e POSTGRES_PASSWORD=ignite -e POSTGRES_USERNAME=docker -d postgres 
+
+```
+* script de criação	da base
+```sql
+
+create database rentx_test
+
+```
+
+* No `package.json`:
+
+
+
+
+---
+
+
+
 
 
  

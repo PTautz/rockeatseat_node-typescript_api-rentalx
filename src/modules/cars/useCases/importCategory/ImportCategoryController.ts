@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
-import { container } from 'tsyringe';
+import { container } from "tsyringe";
 
-import { ImportCategoryUseCase } from './ImportCategoryUseCase';
+import { ImportCategoryUseCase } from "./ImportCategoryUseCase";
 
 class ImportCategoryController {
   // constructor(private importCategoryUseCase: ImportCategoryUseCase) {}

@@ -1,10 +1,8 @@
-import { inject, injectable } from 'tsyringe';
+import { inject, injectable } from "tsyringe";
 
-import { CustomError } from '../../../../errors/CustomError';
-
-import { Category } from '../../entities/Category';
-
-import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
+import { Category } from "@modules/cars/infra/typeorm/entities/Category";
+import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
+import { CustomError } from "@shared/errors/CustomError";
 
 interface IRequest {
   name: string;
@@ -14,7 +12,7 @@ interface IRequest {
 @injectable()
 class CreateCategoryUseCase {
   constructor(
-    @inject('CategoriesRepository')
+    @inject("CategoriesRepository")
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
@@ -23,11 +21,10 @@ class CreateCategoryUseCase {
 
     if (categoryAlreadyExists) {
       // throw new Error('Category already exists!');
-      throw new CustomError(409, 'Category already exists!');
+      throw new CustomError(409, "Category already exists!");
     }
-    const categoryCreated = this.categoriesRepository.create({ name, description });
 
-    return categoryCreated;
+    return this.categoriesRepository.create({ name, description });
   }
 }
 
