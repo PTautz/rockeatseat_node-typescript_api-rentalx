@@ -1,4 +1,6 @@
-# Projeto Chapter II - Ignite - Rockeatseat
+# Projeto Rentx - Aplicação de aluguel de carros - Rent a Car Application
+
+---
 ## Instalando Eslint - Prettier: 
 Essas ferramentas auxiliam na padronização da escrita do código :
 
