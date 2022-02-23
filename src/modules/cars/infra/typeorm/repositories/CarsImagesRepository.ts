@@ -26,8 +26,9 @@ class CarsImagesRepository implements ICarsImagesRepository {
     await this.repository.delete({ car_id });
   }
 
+  // findOne - parãmetro do tipo findOptions - passar condições
   async findByCarId(car_id: string): Promise<CarImage> {
-    return this.repository.findOne({ car_id });
+    return this.repository.findOne({ where: { car_id } });
   }
 }
 

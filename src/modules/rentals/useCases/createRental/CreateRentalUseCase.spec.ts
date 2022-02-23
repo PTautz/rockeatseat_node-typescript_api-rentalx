@@ -65,14 +65,14 @@ describe("Create rental", () => {
 
   it("should not be able to create a new rental if there is another rent open to the same user", async () => {
     await rentalsRepositoryInMemory.create({
-      car_id: "salsicha's car",
+      car_id: "salsicha's car id",
       user_id: "654321",
       expected_return_date: dayAdd24Hours,
     });
 
     await expect(
       createRentalUseCase.execute({
-        car_id: "batmovel",
+        car_id: "batmovel id",
         user_id: "654321",
         expected_return_date: dayAdd24Hours,
       }),

@@ -13,9 +13,6 @@ class UploadCarImagesUseCase {
     @inject("CarsImagesRepository")
     private carsImagesRepository: ICarsImagesRepository,
   ) {}
-  //   @inject("StorageProvider")
-  //   private storageProvider: IStorageProvider,
-  //  ) {}
 
   async execute({ car_id, images_names }: IRequest): Promise<void> {
     const carImageReplacement = await this.carsImagesRepository.findByCarId(car_id);

@@ -19,8 +19,12 @@ class DeleteCarSpecificationsUseCase {
   async execute({ car_id }: IRequest): Promise<Car> {
     const carExists = await this.carsRepository.findById(car_id);
 
+    if (!carExists) {
+      throw new CustomError(404, `Car does not exist!`);
+    }
+
     if (carExists.specifications === undefined || carExists.specifications.length === 0) {
-      throw new CustomError(404, "Specification's Car does not exist!");
+      throw new CustomError(404, `Specification's Car does not exist!`);
     }
 
     carExists.specifications = [];

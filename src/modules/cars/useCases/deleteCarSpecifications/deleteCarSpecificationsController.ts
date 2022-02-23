@@ -13,7 +13,7 @@ class DeleteCarSpecificationsController {
       car_id: id,
     });
 
-    return response.status(201).json("Specifications deleted");
+    return response.status(200).json("Specifications deleted");
   }
 }
 

@@ -15,6 +15,6 @@ const deleteCarSpecificationsController = new DeleteCarSpecificationsController(
 
 specificationsRoutes.post("/", ensureAuthenticated, ensureAdmin, createSpecificationController.handle);
 
-specificationsRoutes.delete("/:id", ensureAuthenticated, ensureAdmin, deleteCarSpecificationsController.handle);
+specificationsRoutes.delete("car/:id", ensureAuthenticated, ensureAdmin, deleteCarSpecificationsController.handle);
 
 export { specificationsRoutes };

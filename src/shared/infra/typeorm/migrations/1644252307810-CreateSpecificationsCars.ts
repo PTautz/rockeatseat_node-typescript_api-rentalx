@@ -5,25 +5,18 @@ export class CreateSpecificationsCars1644252307810 implements MigrationInterface
     await queryRunner.createTable(
       new Table({
         name: "specifications_cars",
-
         columns: [
           {
             name: "car_id",
-
             type: "uuid",
           },
-
           {
             name: "specification_id",
-
             type: "uuid",
           },
-
           {
             name: "created_at",
-
             type: "timestamp",
-
             default: "now()",
           },
         ],
@@ -32,36 +25,24 @@ export class CreateSpecificationsCars1644252307810 implements MigrationInterface
 
     await queryRunner.createForeignKey(
       "specifications_cars",
-
       new TableForeignKey({
         name: "FKCarSpecification",
-
         referencedTableName: "cars",
-
         referencedColumnNames: ["id"],
-
         columnNames: ["car_id"],
-
         onDelete: "SET NULL",
-
         onUpdate: "SET NULL",
       }),
     );
 
     await queryRunner.createForeignKey(
       "specifications_cars",
-
       new TableForeignKey({
         name: "FKSpecificationCar",
-
         referencedTableName: "specifications",
-
         referencedColumnNames: ["id"],
-
         columnNames: ["specification_id"],
-
         onDelete: "SET NULL",
-
         onUpdate: "SET NULL",
       }),
     );

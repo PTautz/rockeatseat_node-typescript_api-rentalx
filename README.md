@@ -826,6 +826,10 @@ yarn add tsconfig-paths -D
 * Criação do `admin.ts`:
 ![criação de admin.ts no diretório do typeorm](images/seed-admin.png)
 
+```properties bash
+yarn seed:admin
+```
+
 *Adicionando script no `package.json`:
 
 ![Adição do script no package.json](images/package-json-seed-admin.png)
@@ -868,13 +872,46 @@ create database rentx_test
 
 ```
 
-* No `package.json`:
-
-
-
+* Setar variáveis de ambiente para o windows no `package.json`:
+```json
+"test": "set NODE_ENV=test&&jest --runInBand --detectOpenHandles",
+```
 
 ---
 
+# Refresh Token
+
+* Para o usuário não precisar fazer o login novamente (username-password), é utilizado o conceito do `Refresh Token` , aonde a aplicação verifica que ocorreu a expiração e pega o refresh token que for gerado no momento da autenticação e envia um novo token válido mantendo o usuário logado e atualizando o token conforme o tempo de expiração.
+
+* O refresh token pode ser um dado diferente do token definido inicialmente na aplicação.
+
+* Pode ter mais de um Token pra o mesmo usuário (dispositivos diferentes)
+>> Persistência no banco de dados para validar as informações!
+
+# Envio de emails : Ethereal (Desenvolvimento)
+[Documentação](https://ethereal.email/)
+
+* Usa o Nodemailer para enviar o 'fake' email sem precisar criar conta
+
+* Instalação: 
+  ```properties Bash
+
+  yarn add nodemailer
+
+  yarn add @types/nodemailer -D
+
+  ```
+
+  * Criação de template de email : [Handlebars](https://handlebarsjs.com/)
+
+* Instalação: 
+  ```properties Bash
+
+  yarn add handlebars
+
+  yarn add @types/handlebars -D
+
+  ```
 
 
 

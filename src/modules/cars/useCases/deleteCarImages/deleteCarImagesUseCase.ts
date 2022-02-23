@@ -18,7 +18,7 @@ class DeleteCarImagesUseCase {
   async execute({ car_id }: IRequest): Promise<void> {
     const carImageExists = await this.carsImagesRepository.findByCarId(car_id);
 
-    if (!carImageExists.image_name) {
+    if (!carImageExists) {
       throw new CustomError(404, "Image not found");
     }
     await deleteFile(`./tmp/cars/${carImageExists.image_name}`);

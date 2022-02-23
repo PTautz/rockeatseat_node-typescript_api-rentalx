@@ -5,39 +5,27 @@ export class CreateCars1643897202043 implements MigrationInterface {
     await queryRunner.createTable(
       new Table({
         name: "cars",
-
         columns: [
           {
             name: "id",
-
             type: "uuid",
-
             isPrimary: true,
           },
-
           {
             name: "name",
-
             type: "varchar",
           },
-
           {
             name: "description",
-
             type: "varchar",
           },
-
           {
             name: "daily_rate",
-
             type: "numeric",
           },
-
           {
             name: "available",
-
             type: "boolean",
-
             default: true,
           },
           {
@@ -65,7 +53,7 @@ export class CreateCars1643897202043 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: "FKcategorysCar",
+            name: "FKCategoryCar",
             referencedTableName: "categories",
             referencedColumnNames: ["id"],
             columnNames: ["category_id"],

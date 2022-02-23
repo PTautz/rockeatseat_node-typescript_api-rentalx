@@ -5,7 +5,7 @@
     "description": "This is an API Rent",
     "version": "1.0.0",
     "contact": {
-      "email": "donatello@catiorro.com"
+      "email": "patinele.league@gmail.com"
     }
   },
   "paths": {
@@ -14,6 +14,9 @@
         "tags": [ "Category"],
         "summary": "Create a category",
         "description": "Create a new category",
+        "security": [
+          { "bearerAuth": [] }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -78,6 +81,9 @@
         "tags": ["Category"],
         "summary": "Upload a new category",
         "description": "Upload a new category",
+        "security": [
+          { "bearerAuth": [] }
+        ],
         "requestBody":{
           "content": {
             "multipart/form-data": {
@@ -108,28 +114,354 @@
         "tags": ["Specifications"],
         "summary":"Create a specification",
         "description":"Create a specification",
+        "security": [
+          { "bearerAuth": [] }
+        ],
         "requestBody":{
           "content":{
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/Specifications"
+                "$ref": "#/definitions/Specification"
               }
             }
           }
         },
-        "responses":{
-          "201":{
+        "responses": {
+          "201": {
             "description": "Created"
           },
-          "409":{
-            "description": "Specification already exists"
+          "409": {
+            "description": "Specification already exists!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Specification already exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/specifications/car/{id}": {
+      "delete": {
+        "tags": ["Specifications"],
+        "summary":"Delete a car specification",
+        "description":"Delete a car specification",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody":{
+          "content":{
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Specification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "404": {
+            "description": "Car or Specification's Car does not exist!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Car or Specification's Car does not exist!!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "Authenticate a user",
+        "description": "Authenticate a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example":"admin@rentx.com.br"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example":"admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Email or password incorrect!"
+          }
+        }
+      }
+    },
+    "/cars": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Create a new car",
+        "description": "Create a new car",
+        "security": [
+          { "bearerAuth": []}
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Car already exists!"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cars"],
+        "summary": "Delete car",
+        "description": "Delete car",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Car not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Car not found"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot delete a car with a rent assigned!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Cannot delete a car with a rent assigned!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/available": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "List all cars available",
+        "description": "List all cars available",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "query",
+            "description": "Category id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "brand",
+            "in": "query",
+            "description": "brand",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listing of cars available for rent returned successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/images/{id}": {
+      "delete": {
+        "tags": ["Cars"],
+        "summary": "Delete car images",
+        "description": "Delete car images",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Image not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "Image not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Upload car images",
+        "description": "Upload car images",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
           }
         }
       }
     }
   },
   "definitions": {
-    "Specifications": {
+    "Specification": {
       "type": "object",
       "properties": {
         "name": {
@@ -138,6 +470,46 @@
         "description": {
           "type": "string"
         }
+      }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "daily_rate": {
+          "type": "number"
+        },
+        "license_plate": {
+          "type": "string"
+        },
+        "fine_amount": {
+          "type": "number"
+        },
+        "brand": {
+          "type": "string",
+          "example":"ford"
+        },
+        "category_id": {
+          "type": "string"
+        },
+        "specifications": {
+          "type": "array",
+          "$ref": "#/definitions/Specification"
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

@@ -8,6 +8,7 @@ class AuthenticateUserController {
 
     const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase);
 
+    // console.log(`Chamando authenticateUserUseCase.execute({ senha=${password}, email=${email} })`);
     const token = await authenticateUserUseCase.execute({ password, email });
 
     return response.status(200).json(token).send();

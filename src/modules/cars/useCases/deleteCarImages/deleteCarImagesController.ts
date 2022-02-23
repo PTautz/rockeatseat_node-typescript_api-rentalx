@@ -10,7 +10,7 @@ class DeleteCarImagesController {
 
     await deleteCarImagesUseCase.execute({ car_id: id });
 
-    return response.status(201).json(`Image deleted`).send();
+    return response.status(200).json(`Image deleted`).send();
   }
 }
 
