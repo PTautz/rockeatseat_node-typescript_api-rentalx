@@ -1,4 +1,9 @@
-# Projeto Chapter II - Ignite - Rockeatseat
+# Projeto Rentx - Aplicação de aluguel de carros - Rent a Car Application
+
+Aplicação desenvolvida para estudos das tecnologias envolvidas durante a trilha Ignite - Node.JS - Typescript - Rocketseat
+
+Listado aqui vários itens trabalhados durante o desenvolvimento da aplicação para consulta.
+---
 ## Instalando Eslint - Prettier: 
 Essas ferramentas auxiliam na padronização da escrita do código :
 
